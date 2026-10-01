@@ -1,0 +1,15 @@
+interface:
+  display_name: Value + Momentum Entry
+  short_description: Fixed value zones and portfolio opportunity alerts
+  default_prompt: Use $fundamental-value-entry to calculate fixed buy zones, detect
+    watchlist-wide opportunities, and give an executable value and momentum entry
+    plan.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
