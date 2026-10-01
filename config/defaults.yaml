@@ -1,0 +1,15 @@
+policy: PRICE_BLIND_DUAL_TRACK_V3
+general_same_zone_drop_threshold: 0.07
+focus_same_zone_drop_threshold: 0.05
+focus_order:
+  - VRT
+  - CRDO
+  - AVGO
+  - HPS.A
+  - ASML
+  - NVDA
+execution_policy: RECOMMENDED_NE_EXECUTED
+close_archive:
+  timezone: America/New_York
+  regular_market_time: "16:10"
+  timing_mode: exact_schedule
