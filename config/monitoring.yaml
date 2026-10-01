@@ -1,0 +1,31 @@
+schema_version: 4
+policy: LIGHT_SCAN_PLUS_IDEMPOTENT_CLOSE_REVIEW
+
+gates:
+  require_security_identity: true
+  require_fresh_quote_for_zone_mapping: true
+  unvalued_blocks_zone_classification: true
+
+lightweight_scan:
+  rebuild_valuation: false
+  set_deep_review_pending_on_trigger: true
+
+abnormal_move:
+  default_abs_single_session_threshold: 0.08
+  focus_abs_single_session_threshold: 0.05
+  action: DEEP_REVIEW_REQUIRED
+  automatic_revaluation: false
+
+scheduled_heavy_review:
+  timezone: America/New_York
+  regular_market_time: "16:10"
+  timing_mode: exact_schedule
+  frequency: each_us_trading_day
+  max_completed_runs_per_trading_date: 1
+  idempotency_key: heavy_review_trading_date
+  include_focus_core_daily_reconciliation: true
+  include_all_pending_extended: true
+
+same_zone_realert:
+  general_drop_threshold: 0.07
+  focus_drop_threshold: 0.05
