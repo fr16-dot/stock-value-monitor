@@ -1,0 +1,19 @@
+schema_version: 4
+
+valuation_vs_execution:
+  current_price_may_change_intrinsic_value: false
+  momentum_may_change_intrinsic_value: false
+  options_pricing_may_change_intrinsic_value: false
+
+position_sizing:
+  mode: user_context_or_external_policy
+  hard_coded_tranche_percentages_in_skill: false
+
+holdings:
+  recommendation_updates_holdings: false
+  require_explicit_confirmation: true
+
+momentum:
+  enabled_as_optional_overlay: true
+  may_change_timing: true
+  may_change_valuation_zones: false
