@@ -1,21 +1,42 @@
 # stock-value-monitor
 
-A versioned, price-blind equity valuation and monitoring workflow.
+A price-blind, versioned equity valuation and monitoring system.
+
+## Architecture
+
+The system separates three concerns:
+
+1. **Valuation kernel** — builds and versions intrinsic value without current-price anchoring.
+2. **Monitoring scheduler** — performs inexpensive FOCUS/CORE/EXTENDED scans.
+3. **Event escalation** — queues deep research on material catalysts or abnormal moves and reconciles it in one scheduled post-close heavy review per U.S. trading date.
 
 ## Canonical skill package
 
-The validated skill is stored under `skill/fundamental-value-entry/`:
+`skill/fundamental-value-entry/`
 
-- `SKILL.md` — core valuation, momentum, monitoring, and execution workflow
+- `SKILL.md` — compact runtime contract and invariants
+- `references/valuation-models.md` — TRADITIONAL and HIGH_CONVEXITY models
+- `references/monitoring-policy.md` — FOCUS / CORE / EXTENDED behavior
+- `references/review-triggers.md` — 8%/5% abnormal-move rules and post-close idempotency
+- `references/registry-schema.md` — valuation/runtime state schema
+- `references/source-policy.md` — source hierarchy and freshness
+- `references/momentum-entry-framework.md` — optional execution overlay
+- `references/lessen_learnrd.md` — incident-derived permanent controls
 - `agents/openai.yaml` — skill UI metadata
 - `assets/icon.svg` — skill icon
-- `references/lessen_learnrd.md` — incident-derived controls and permanent fixes
-- `references/momentum-entry-framework.md` — catalyst and momentum-entry rules
-- `references/valuation-record-template.md` — versioned valuation record schema/template
-- `references/watchlist-monitoring-framework.md` — full-list scanning, trigger, and deployment rules
 
-The package is copied from the current validated installed skill. `config/defaults.yaml` contains optional repository-level defaults and is not part of the installable skill directory.
+## Repository config
 
-## Scope note
+- `config/defaults.yaml` — compatibility defaults
+- `config/universe.yaml` — tier definitions and focus order
+- `config/monitoring.yaml` — lightweight scan and heavy-review policy
+- `config/execution-policy.yaml` — separation of valuation, momentum, and holdings state
 
-The skill defines the reusable analytical workflow. Live schedules, Airtable records, portfolio holdings, alert state, and automation prompts are deployment-specific runtime state and are not embedded in the skill package.
+## Key controls
+
+- FOCUS and CORE are `daily_core: true`; EXTENDED is `daily_core: false`.
+- A default absolute single-session move of 8% queues deep review; FOCUS uses 5%.
+- The price trigger causes investigation, not automatic revaluation.
+- Scheduled heavy review runs exactly once per U.S. trading date, normally at 16:10 America/New_York.
+- HIGH_CONVEXITY is a first-class valuation model for milestone-driven and financing-sensitive businesses.
+- Hard-coded tranche percentages are removed from the valuation kernel.
